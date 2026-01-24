@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -44,5 +45,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function houses()
+    {
+        return $this->hasMany(House::class, 'owner_id');
+    }
+
+    public function tenant()
+    {
+        return $this->hasOne(Tenant::class, 'user_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isTenant()
+    {
+        return $this->role === 'tenant';
     }
 }
