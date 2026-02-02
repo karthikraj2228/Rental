@@ -70,7 +70,11 @@ class ReportController extends Controller
     public function invoice(Rent $rent)
     {
          
-        return view('admin.reports.invoice', compact('rent'));
+    //    return  $rent;
+         
+         $tenants=Tenant::where('id',$rent->tenant_id)->first();
+          $type=$tenants->type;
+        return view('admin.reports.invoice', compact('rent','type'));
     }
     public function updateStatus(Request $request, $id)
 {

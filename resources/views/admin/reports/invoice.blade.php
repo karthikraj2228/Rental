@@ -50,6 +50,7 @@
                 </tr>
             </thead>
             <tbody class="text-gray-700">
+                @if($type=='Rent')
                 <tr class="border-b border-dashed border-gray-100">
                     <td class="py-4">
                         <span class="block font-medium">Monthly Rent</span>
@@ -57,6 +58,7 @@
                     </td>
                     <td class="text-right py-4">₹{{ number_format($rent->rent_amount, 2) }}</td>
                 </tr>
+                @endif
                 <tr class="border-b border-dashed border-gray-100">
                     <td class="py-4">
                         <span class="block font-medium">Electricity Charges</span>
