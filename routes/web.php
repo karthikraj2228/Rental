@@ -41,9 +41,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
     Route::get('reports/export', [App\Http\Controllers\Admin\ReportController::class, 'export'])->name('reports.export');
     Route::get('reports/invoice/{rent}', [App\Http\Controllers\Admin\ReportController::class, 'invoice'])->name('reports.invoice');
+    Route::post('rent/update-status/{id}', [App\Http\Controllers\Admin\ReportController::class, 'updateStatus'])->name('rent.update-status');
+
 });
 
 // Tenant Routes
 Route::middleware(['auth', 'role:tenant'])->prefix('tenant')->name('tenant.')->group(function () {
     Route::get('/dashboard', [TenantDashboard::class, 'index'])->name('dashboard');
+    Route::get('/histroy', [TenantDashboard::class, 'histroy'])->name('histroy');
 });

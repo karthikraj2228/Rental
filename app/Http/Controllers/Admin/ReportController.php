@@ -17,7 +17,7 @@ class ReportController extends Controller
             $query->where('month', $request->month);
         }
 
-        $rents = $query->paginate(20);
+          $rents = $query->paginate(20);
         $totalCollected = $query->clone()->where('status', 'paid')->sum('total_amount');
         $totalPending = $query->clone()->where('status', 'pending')->sum('total_amount');
 
@@ -69,7 +69,17 @@ class ReportController extends Controller
 
     public function invoice(Rent $rent)
     {
-        
+         
         return view('admin.reports.invoice', compact('rent'));
     }
+    public function updateStatus(Request $request, $id)
+{
+     
+      $rent = Rent::find($id);
+    $rent->status = $request->status;
+    $rent->save();
+
+    return response()->json(['success' => true]);
+}
+
 }

@@ -45,7 +45,7 @@
             <i class="bi bi-house-door text-xl"></i>
             Home
         </a>
-        <a href="#" class="flex flex-col items-center gap-1 text-xs text-gray-400">
+        <a href="{{ route('tenant.histroy') }}" class="flex flex-col items-center gap-1 text-xs text-gray-400">
             <i class="bi bi-receipt text-xl"></i>
             History
         </a>

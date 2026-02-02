@@ -27,7 +27,7 @@
             <div class="text-right">
                 <h2 class="font-bold text-xl text-blue-600">Varalakshmi</h2>
                 <h2 class="font-bold text-xl text-blue-600">Month: {{ \Carbon\Carbon::parse($rent->month)->format('M Y') }}</h2>
-                <p class="text-gray-500 text-sm mt-1">123 Management St,<br>City, State, 12345</p>
+                <!-- <p class="text-gray-500 text-sm mt-1">123 Management St,<br>City, State, 12345</p> -->
             </div>
         </div>
 

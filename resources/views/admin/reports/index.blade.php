@@ -47,7 +47,7 @@
                     <th class="px-6 py-3">Property</th>
                     <th class="px-6 py-3 text-right">Rent</th>
                     <th class="px-6 py-3 text-right">Total</th>
-                    <th class="px-6 py-3">Status</th>
+                    <th class="px-6 py-3">Status</th> 
                     <th class="px-6 py-3">Action</th>
                 </tr>
             </thead>
@@ -57,13 +57,27 @@
                     <td class="px-6 py-4 text-gray-500">{{ $rent->created_at->format('d M Y') }}</td>
                     <td class="px-6 py-4 font-medium text-gray-900">{{ $rent->tenant->name }}</td>
                     <td class="px-6 py-4 text-gray-500">{{ $rent->room->house->name }} - {{ $rent->room->room_no }}</td>
-                    <td class="px-6 py-4 text-right text-gray-500">${{ number_format($rent->rent_amount, 2) }}</td>
+                    <td class="px-6 py-4 text-right text-gray-500">
+                        @if($rent->tenant->type == 'Rent')
+                        ${{ number_format($rent->rent_amount, 2) }}
+                        @else
+                        Lease
+                        @endif
+                        </td>
                     <td class="px-6 py-4 text-right font-bold text-gray-900">${{ number_format($rent->total_amount, 2) }}</td>
+                     
+                   
                     <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-xs font-semibold rounded-full {{ $rent->status == 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
-                            {{ ucfirst($rent->status) }}
-                        </span>
-                    </td>
+    <select 
+        onchange="updateStatus(this.value, {{ $rent->id }})"
+        class="px-2 py-1 text-xs font-semibold rounded-full
+        {{ $rent->status == 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}"
+    >
+        <option value="pending" {{ $rent->status == 'pending' ? 'selected' : '' }}>Pending</option>
+        <option value="paid" {{ $rent->status == 'paid' ? 'selected' : '' }}>Paid</option>
+    </select>
+</td>
+
                     <td class="px-6 py-4">
                         <a href="{{ route('admin.reports.invoice', $rent) }}" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Invoice</a>
                     </td>
@@ -80,4 +94,30 @@
         </div>
     </div>
 </div>
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+function updateStatus(status, id) {
+    $.ajax({
+        url: `/admin/rent/update-status/${id}`,
+        type: "POST",
+        data: {
+            status: status,
+            _token: "{{ csrf_token() }}"
+        },
+        success: function (res) {
+            console.log("SUCCESS:", res);
+            alert("Status updated successfully");
+            location.reload();
+        },
+        error: function (xhr) {
+            console.log("ERROR STATUS:", xhr.status);
+            console.log("ERROR RESPONSE:", xhr.responseText);
+            alert("Error occurred! Check console (F12).");
+        }
+    });
+}
+</script>
+
+
+
 @endsection

@@ -29,6 +29,7 @@ class TenantController extends Controller
 
     public function store(Request $request)
     {
+          $request->all();
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
@@ -51,7 +52,7 @@ class TenantController extends Controller
             $userId = null;
             
             // Create Login User if requested
-            if (isset($validated['create_login']) && $validated['email']) {
+            if (isset($validated['create_login']) ) {
                 $user = User::create([
                     'name' => $validated['name'],
                     'email' => $validated['email'],

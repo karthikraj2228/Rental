@@ -21,9 +21,9 @@ class AuthController extends Controller
         ]);
 
         // Determine if login is email or phone
-        $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+          $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
         
-        $credentials = [
+          $credentials = [
             $loginType => $request->login,
             'password' => $request->password,
         ];
@@ -31,7 +31,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             
-            $user = Auth::user();
+              $user = Auth::user();
             
             if ($user->role === 'admin') {
                 return redirect()->intended('admin/dashboard');
