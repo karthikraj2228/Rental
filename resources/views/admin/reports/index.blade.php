@@ -5,7 +5,7 @@
 @section('content')
 <div class="space-y-6">
     <!-- Filter Card -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <!-- <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <form action="{{ route('admin.reports.index') }}" method="GET" class="flex flex-col md:flex-row gap-4 items-end">
             <div class="w-full md:w-auto">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Filter by Month</label>
@@ -23,7 +23,54 @@
                 </a>
             </div>
         </form>
-    </div>
+    </div> -->
+
+    <!-- Filter Card -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6">
+    <form action="{{ route('admin.reports.index') }}" method="GET"
+          class="flex flex-col md:flex-row md:items-end gap-4">
+
+        <!-- Month Filter -->
+        <div class="w-full md:w-auto">
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Filter by Month
+            </label>
+            <input
+                type="month"
+                name="month"
+                value="{{ request('month') }}"
+                class="w-full form-input rounded-xl border-gray-300"
+            >
+        </div>
+
+        <!-- Filter & Reset -->
+        <div class="flex gap-2 w-full md:w-auto">
+            <button
+                type="submit"
+                class="flex-1 md:flex-none bg-gray-900 text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition">
+                Filter
+            </button>
+
+            <a
+                href="{{ route('admin.reports.index') }}"
+                class="flex-1 md:flex-none text-center bg-gray-100 text-gray-600 px-4 py-2 rounded-xl hover:bg-gray-200 transition">
+                Reset
+            </a>
+        </div>
+
+        <!-- Export -->
+        <div class="w-full md:ml-auto md:w-auto">
+            <a
+                href="{{ route('admin.reports.export', request()->all()) }}"
+                class="flex justify-center items-center gap-2 w-full bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 transition">
+                <i class="bi bi-file-earmark-spreadsheet"></i>
+                Export CSV
+            </a>
+        </div>
+
+    </form>
+</div>
+
 
     <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
