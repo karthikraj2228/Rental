@@ -38,8 +38,12 @@
     </div>
 
     <!-- Data Table -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-         <table class="w-full text-sm text-left">
+    <!-- Data Table -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100">
+
+    <!-- 👇 Mobile horizontal scroll -->
+    <div class="overflow-x-auto lg:overflow-x-visible">
+        <table class="min-w-[900px] w-full text-sm text-left">
             <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
                 <tr>
                     <th class="px-6 py-3">Date</th>
@@ -47,52 +51,61 @@
                     <th class="px-6 py-3">Property</th>
                     <th class="px-6 py-3 text-right">Rent</th>
                     <th class="px-6 py-3 text-right">Total</th>
-                    <th class="px-6 py-3">Status</th> 
+                    <th class="px-6 py-3">Status</th>
                     <th class="px-6 py-3">Action</th>
                 </tr>
             </thead>
+
             <tbody class="divide-y divide-gray-100">
                 @forelse($rents as $rent)
                 <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 text-gray-500">{{ $rent->created_at->format('d M Y') }}</td>
-                    <td class="px-6 py-4 font-medium text-gray-900">{{ $rent->tenant->name }}</td>
-                    <td class="px-6 py-4 text-gray-500">{{ $rent->room->house->name }} - {{ $rent->room->room_no }}</td>
+                    <td class="px-6 py-4 text-gray-500">
+                        {{ $rent->created_at->format('d M Y') }}
+                    </td>
+                    <td class="px-6 py-4 font-medium text-gray-900">
+                        {{ $rent->tenant->name }}
+                    </td>
+                    <td class="px-6 py-4 text-gray-500">
+                        {{ $rent->room->house->name }} - {{ $rent->room->room_no }}
+                    </td>
                     <td class="px-6 py-4 text-right text-gray-500">
-                        @if($rent->tenant->type == 'Rent')
                         ${{ number_format($rent->rent_amount, 2) }}
-                        @else
-                        Lease
-                        @endif
-                        </td>
-                    <td class="px-6 py-4 text-right font-bold text-gray-900">${{ number_format($rent->total_amount, 2) }}</td>
-                     
-                   
+                    </td>
+                    <td class="px-6 py-4 text-right font-bold text-gray-900">
+                        ${{ number_format($rent->total_amount, 2) }}
+                    </td>
                     <td class="px-6 py-4">
-    <select 
-        onchange="updateStatus(this.value, {{ $rent->id }})"
-        class="px-2 py-1 text-xs font-semibold rounded-full
-        {{ $rent->status == 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}"
-    >
-        <option value="pending" {{ $rent->status == 'pending' ? 'selected' : '' }}>Pending</option>
-        <option value="paid" {{ $rent->status == 'paid' ? 'selected' : '' }}>Paid</option>
-    </select>
-</td>
-
+                        <span class="px-2 py-1 text-xs font-semibold rounded-full
+                        {{ $rent->status == 'paid'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-yellow-100 text-yellow-700' }}">
+                            {{ ucfirst($rent->status) }}
+                        </span>
+                    </td>
                     <td class="px-6 py-4">
-                        <a href="{{ route('admin.reports.invoice', $rent) }}" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Invoice</a>
+                        <a href="{{ route('admin.reports.invoice', $rent) }}"
+                           target="_blank"
+                           class="text-blue-600 hover:text-blue-800 font-medium">
+                            Invoice
+                        </a>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="px-6 py-8 text-center text-gray-500">No records found.</td>
+                    <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                        No records found.
+                    </td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
-        <div class="p-4 border-t border-gray-100">
-            {{ $rents->withQueryString()->links() }}
-        </div>
     </div>
+
+    <div class="p-4 border-t border-gray-100">
+        {{ $rents->withQueryString()->links() }}
+    </div>
+</div>
+
 </div>
  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
