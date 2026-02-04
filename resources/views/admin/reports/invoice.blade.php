@@ -58,6 +58,8 @@
             <p class="text-gray-500 text-sm">Phone: {{ $rent->tenant->phone }}</p>
         </div>
 
+        <div class="text-center font-bold text-red-700 text-lg">Rent Month : {{ \Carbon\Carbon::parse($rent->month)->format('F Y') }}</div>
+
         <!-- Line Items -->
         <table class="w-full mb-12">
             <thead>

@@ -98,6 +98,7 @@
                     <th class="px-6 py-3">Property</th>
                     <th class="px-6 py-3 text-right">Rent</th>
                     <th class="px-6 py-3 text-right">Total</th>
+                    <th class="px-6 py-3 text-right">Month</th>
                     <th class="px-6 py-3">Status</th>
                     <th class="px-6 py-3">Action</th>
                 </tr>
@@ -116,19 +117,31 @@
                         {{ $rent->room->house->name }} - {{ $rent->room->room_no }}
                     </td>
                     <td class="px-6 py-4 text-right text-gray-500">
+                        @if($rent->tenant->type == 'Rent')
                         ${{ number_format($rent->rent_amount, 2) }}
+                        @else
+                        Lease
+                        @endif
                     </td>
                     <td class="px-6 py-4 text-right font-bold text-gray-900">
                         ${{ number_format($rent->total_amount, 2) }}
                     </td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-xs font-semibold rounded-full
-                        {{ $rent->status == 'paid'
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-yellow-100 text-yellow-700' }}">
-                            {{ ucfirst($rent->status) }}
-                        </span>
+                    <td class="px-6 py-4 text-gray-500">
+                       {{ \Carbon\Carbon::createFromFormat('Y-m', $rent->month)->format('M Y') }}
+
                     </td>
+                   <td class="px-6 py-4">
+    <select
+        onchange="updateStatus(this.value, {{ $rent->id }})"
+        class="px-2 py-1 text-xs font-semibold rounded-full border
+        {{ $rent->status === 'paid'
+            ? 'bg-green-100 text-green-700 border-green-300'
+            : 'bg-yellow-100 text-yellow-700 border-yellow-300' }}">
+        <option value="paid" {{ $rent->status === 'paid' ? 'selected' : '' }}>Paid</option>
+        <option value="pending" {{ $rent->status === 'pending' ? 'selected' : '' }}>Pending</option>
+    </select>
+</td>
+
                     <td class="px-6 py-4">
                         <a href="{{ route('admin.reports.invoice', $rent) }}"
                            target="_blank"

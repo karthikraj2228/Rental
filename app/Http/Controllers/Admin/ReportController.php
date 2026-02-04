@@ -22,7 +22,7 @@ class ReportController extends Controller
             $query->where('month', $prevMonth);
         }
 
-          $rents = $query->paginate(20);
+              $rents = $query->paginate(20);
         $totalCollected = $query->clone()->where('status', 'paid')->sum('total_amount');
         $totalPending = $query->clone()->where('status', 'pending')->sum('total_amount');
 
