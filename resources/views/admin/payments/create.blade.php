@@ -24,7 +24,8 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Billing Month</label>
-                <input type="month" name="month" required value="{{ date('Y-m') }}" class="form-input w-full px-3 py-3 rounded-xl
+                <input type="month" name="month" required value="{{ date('Y-m', strtotime('-1 month')) }}"
+ class="form-input w-full px-3 py-3 rounded-xl
            bg-white text-gray-900
            border border-gray-300
            focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
@@ -43,7 +44,7 @@
                     </div>
                     <div class="col-span-2">
                         <label class="block text-xs font-semibold text-gray-500 mb-1">Cost Per Unit</label>
-                        <input type="number" name="eb_rate" required value="10" step="0.01" class="form-input w-full rounded-lg border-gray-300 px-3 py-3">
+                        <input type="number" name="eb_rate" required value="9" step="0.01" class="form-input w-full rounded-lg border-gray-300 px-3 py-3">
                     </div>
                 </div>
             </div>

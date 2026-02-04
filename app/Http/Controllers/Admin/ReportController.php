@@ -11,10 +11,15 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
+          $prevMonth = now()->subMonth()->format('Y-m');
+
+
         $query = Rent::with('tenant.room.house')->latest();
 
         if ($request->has('month')) {
             $query->where('month', $request->month);
+        }else{
+            $query->where('month', $prevMonth);
         }
 
           $rents = $query->paginate(20);

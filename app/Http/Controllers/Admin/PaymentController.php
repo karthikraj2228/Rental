@@ -20,7 +20,7 @@ class PaymentController extends Controller
     // Rent Generation Form
     public function create()
     {
-        $tenants = Tenant::where('status', 'active')->get();
+         $tenants = Tenant::where('status', 'active')->get();
         return view('admin.payments.create', compact('tenants'));
     }
 

@@ -6,17 +6,34 @@
     <title>Invoice #INV-{{ $rent->id }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @media print {
-            .no-print { display: none; }
-            body { background: white; }
-        }
-    </style>
+.invoice {
+    width: 794px; /* A4 width @ 96dpi */
+    max-width: 794px;
+}
+
+/* Mobile scaling */
+@media (max-width: 768px) {
+    .invoice {
+        transform: scale(0.85);
+        transform-origin: top center;
+    }
+}
+
+@media print {
+    .invoice {
+        transform: none;
+        width: 794px;
+    }
+}
+</style>
+
 </head>
 <body class="bg-gray-100 p-8">
     
-    <div id="invoice" class="max-w-2xl mx-auto bg-white p-12 shadow-lg rounded-xl print:shadow-none print:p-0">
+    <div id="invoice" class="invoice mx-auto bg-white p-12 shadow-lg rounded-xl">
         <!-- Header -->
-        <div class="flex justify-between items-start mb-12">
+        <div class="flex flex-row justify-between items-start mb-12">
+
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">INVOICE</h1>
                 <p class="text-gray-500 text-sm mt-1">#INV-{{ str_pad($rent->id, 5, '0', STR_PAD_LEFT) }}</p>
@@ -101,12 +118,21 @@ async function shareInvoice() {
     const fileName = "{{ $rent->tenant->name }} -{{ \Carbon\Carbon::parse($rent->month)->format('F-Y') }}.pdf";
 
     const opt = {
-        margin: 0.5,
-        filename: fileName,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-    };
+    margin: 0,
+    filename: fileName,
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: {
+        scale: 3,
+        useCORS: true,
+        windowWidth: 794
+    },
+    jsPDF: {
+        unit: 'px',
+        format: [794, 1123], // A4 exact size
+        orientation: 'portrait'
+    }
+};
+
 
     const pdfBlob = await html2pdf().set(opt).from(element).outputPdf('blob');
 

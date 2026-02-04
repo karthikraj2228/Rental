@@ -93,7 +93,7 @@
         <table class="min-w-[900px] w-full text-sm text-left">
             <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
                 <tr>
-                    <th class="px-6 py-3">Date</th>
+                    <th class="px-6 py-3">Invoice Date</th>
                     <th class="px-6 py-3">Tenant</th>
                     <th class="px-6 py-3">Property</th>
                     <th class="px-6 py-3 text-right">Rent</th>
