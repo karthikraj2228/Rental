@@ -32,6 +32,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Payments & Settlement
     Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('payments/create', [PaymentController::class, 'create'])->name('payments.create');
+    Route::get('payment/latest-unit/{id}', [PaymentController::class, 'latestUnit'])->name('payments.latest-unit');
     Route::post('payments', [PaymentController::class, 'store'])->name('payments.store');
     
     Route::get('payments/settlement/{tenant}', [PaymentController::class, 'settlement'])->name('payments.settlement');

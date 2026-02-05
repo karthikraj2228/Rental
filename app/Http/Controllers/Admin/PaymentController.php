@@ -24,6 +24,15 @@ class PaymentController extends Controller
         return view('admin.payments.create', compact('tenants'));
     }
 
+    public function latestUnit($id)
+    {
+        $latestRent = Rent::where('tenant_id', $id)->latest()->first();
+        if ($latestRent) {
+            return response()->json(['to_unit' => $latestRent->to_unit]);
+        }
+        return response()->json(['to_unit' => 0]);
+    }
+
     // Store Rent
     public function store(Request $request)
     {

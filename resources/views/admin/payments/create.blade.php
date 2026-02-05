@@ -14,7 +14,7 @@
                 class="form-input w-full px-3 py-3 rounded-xl
            bg-white text-gray-900
            border border-gray-300
-           focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
+           focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500" onchange="updateStatus(this.value)">
                     <option value="">-- Choose Active Tenant --</option>
                     @foreach($tenants as $tenant)
                         <option value="{{ $tenant->id }}">{{ $tenant->name }} (Room {{ $tenant->room->room_no }})</option>
@@ -36,7 +36,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 mb-1">Previous Unit</label>
-                        <input type="number" name="from_unit" required min="0" class="form-input w-full rounded-lg border-gray-300 px-3 py-3">
+                        <input type="number" id="from-unit" name="from_unit" required min="0" class="form-input w-full rounded-lg border-gray-300 px-3 py-3">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 mb-1">Current Unit</label>
@@ -57,3 +57,29 @@
     </div>
 </div>
 @endsection
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+function updateStatus( id) {
+
+    console.log("for tenant ID:", id);
+     
+    $.ajax({
+        url: `/admin/payment/latest-unit/${id}`,
+        type: "Get",
+        data: {
+            id: id,
+            
+        },
+        success: function (res) {
+            console.log("SUCCESS:", res);
+            $('#from-unit').val(res.to_unit);
+            
+        },
+        error: function (xhr) {
+            console.log("ERROR STATUS:", xhr.status);
+            console.log("ERROR RESPONSE:", xhr.responseText);
+            alert("Error occurred! Check console (F12).");
+        }
+    });
+}
+</script>
